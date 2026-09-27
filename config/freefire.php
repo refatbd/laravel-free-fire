@@ -3,7 +3,7 @@
 return [
     'enabled' => env('FREEFIRE_ENABLED', true),
     'default_region' => env('FREEFIRE_DEFAULT_REGION', 'BD'),
-    'protocol' => env('FREEFIRE_PROTOCOL', 'OB54'),
+    'protocol' => env('FREEFIRE_PROTOCOL', 'OB55'),
     // Custom profiles or overrides. Built-in profiles are registered by core
     // even when an older published Laravel config does not list them.
     'profiles' => [],

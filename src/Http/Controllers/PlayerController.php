@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Refatbd\FreeFire\Exception\ConfigurationException;
 use Refatbd\FreeFire\Exception\FreeFireException;
 use Refatbd\FreeFire\Exception\InvalidInputException;
+use Refatbd\FreeFire\Exception\LookupIncompleteException;
+use Refatbd\FreeFire\Exception\TransportException;
+use Refatbd\FreeFire\Exception\UnrecognizedLoginResponseException;
 use Refatbd\FreeFire\FreeFireClient;
 use Refatbd\FreeFire\Media\MediaVersion;
 
@@ -22,7 +25,7 @@ final class PlayerController
     {
         $uid = (string) $request->query('uid', '');
         if ($uid === '') {
-            return response()->json(['error' => 'The uid query parameter is required.'], 422);
+            return response()->json(['error' => 'The uid query parameter is required.', 'code' => 'INVALID_INPUT'], 422);
         }
 
         return $this->lookup($request, $uid, $client);
@@ -57,13 +60,23 @@ final class PlayerController
 
             return response()->json($data);
         } catch (InvalidInputException|\InvalidArgumentException $e) {
-            return response()->json(['error' => $e->getMessage()], 422);
+            return response()->json(['error' => $e->getMessage(),
+                'code' => str_contains(strtolower($e->getMessage()), 'not found') ? 'PLAYER_NOT_FOUND' : 'INVALID_INPUT'], 422);
         } catch (ConfigurationException $e) {
             report($e);
-            return response()->json(['error' => 'Free Fire integration is not configured correctly.'], 503);
+            return response()->json(['error' => 'Free Fire service account or integration is not configured correctly.', 'code' => 'CREDENTIAL_CONFIG_ERROR'], 503);
+        } catch (LookupIncompleteException $e) {
+            report($e);
+            return response()->json(['error' => 'Some Free Fire regions are unavailable; lookup is incomplete.', 'code' => 'LOOKUP_INCOMPLETE'], 503);
+        } catch (UnrecognizedLoginResponseException $e) {
+            report($e);
+            return response()->json(['error' => 'Service account login returned no usable token; check the account and OB protocol.', 'code' => 'UNRECOGNIZED_LOGIN_RESPONSE'], 502);
+        } catch (TransportException $e) {
+            report($e);
+            return response()->json(['error' => 'The Free Fire service is temporarily unavailable.', 'code' => 'UPSTREAM_ERROR'], 502);
         } catch (FreeFireException $e) {
             report($e);
-            return response()->json(['error' => 'Player information is temporarily unavailable.'], 502);
+            return response()->json(['error' => 'Player information is temporarily unavailable.', 'code' => 'PROTOCOL_ERROR'], 502);
         } catch (\Throwable $e) {
             report($e);
             return response()->json(['error' => 'Player information is temporarily unavailable.'], 502);

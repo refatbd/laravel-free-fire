@@ -11,7 +11,7 @@ final class PackageRoutesTest extends TestCase
 
         $response->assertOk()
             ->assertJsonPath('ok', true)
-            ->assertJsonPath('protocol', 'OB54')
+            ->assertJsonPath('protocol', 'OB55')
             ->assertJsonPath('credentials', 'configured-server-side')
             ->assertJsonMissing(['password'])
             ->assertJsonMissing(['token']);
@@ -21,7 +21,20 @@ final class PackageRoutesTest extends TestCase
     {
         $this->getJson('/player-info?region=BD')
             ->assertStatus(422)
-            ->assertJsonPath('error', 'The uid query parameter is required.');
+            ->assertJsonPath('error', 'The uid query parameter is required.')
+            ->assertJsonPath('code', 'INVALID_INPUT');
+    }
+
+    public function test_partial_account_override_reports_configuration_error(): void
+    {
+        putenv('FREEFIRE_BD_UID=123456789');
+        try {
+            $this->getJson('/api/free-fire/v1/players/4422076728?region=BD')
+                ->assertStatus(503)
+                ->assertJsonPath('code', 'CREDENTIAL_CONFIG_ERROR');
+        } finally {
+            putenv('FREEFIRE_BD_UID');
+        }
     }
 
     public function test_media_route_can_be_disabled_without_contacting_upstream(): void

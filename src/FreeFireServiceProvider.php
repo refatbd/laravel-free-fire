@@ -58,7 +58,7 @@ final class FreeFireServiceProvider extends ServiceProvider
         });
         $this->app->singleton(ProtocolProfileInterface::class, function ($app) {
             return $app->make(ProtocolProfileRegistry::class)->get(
-                (string) config('freefire.protocol', 'OB54')
+                (string) config('freefire.protocol', 'OB55')
             );
         });
         $this->app->singleton(HttpTransportInterface::class, fn () => new StreamHttpTransport());
