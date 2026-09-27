@@ -6,7 +6,7 @@ Laravel integration package for the Free Fire player information & official ASTC
 
 ## Version
 
-The latest tag before the OB55 recovery is [`v1.0.1`](https://github.com/refatbd/laravel-free-fire/tree/v1.0.1). The OB55 defaults and error handling on `main` target **`v1.1.0`**, which must be tagged before versioned Composer installs can use them. The package version (`vX.Y.Z`) is separate from the Free Fire protocol version (`OB55`). Release tags originate in the [canonical monorepo](https://github.com/refatbd/free-fire-php-monorepo); see its [release process](https://github.com/refatbd/free-fire-php-monorepo/blob/main/docs/RELEASE_PROCESS.md).
+**Latest release: [`v1.1.0`](https://github.com/refatbd/laravel-free-fire/tree/v1.1.0) (OB55 recovery).** The previous [`v1.0.1`](https://github.com/refatbd/laravel-free-fire/tree/v1.0.1) release does not include the OB55 defaults and error handling. The package version (`vX.Y.Z`) is separate from the Free Fire protocol version (`OB55`). Release tags originate in the [canonical monorepo](https://github.com/refatbd/free-fire-php-monorepo); see its [release process](https://github.com/refatbd/free-fire-php-monorepo/blob/main/docs/RELEASE_PROCESS.md).
 
 ## Installation
 
