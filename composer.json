@@ -1,43 +1,43 @@
 {
-  "name": "refatbd/laravel-free-fire",
-  "description": "Laravel integration for refatbd/free-fire-php.",
-  "type": "library",
-  "license": "MIT",
-  "require": {
-    "php": "^8.2",
-    "illuminate/cache": "^11.0 || ^12.0 || ^13.0",
-    "illuminate/console": "^11.0 || ^12.0 || ^13.0",
-    "illuminate/contracts": "^11.0 || ^12.0 || ^13.0",
-    "illuminate/http": "^11.0 || ^12.0 || ^13.0",
-    "illuminate/routing": "^11.0 || ^12.0 || ^13.0",
-    "illuminate/support": "^11.0 || ^12.0 || ^13.0",
-    "refatbd/free-fire-php": "^1.0 || *@dev"
-  },
-  "autoload": {
-    "psr-4": {
-      "Refatbd\\LaravelFreeFire\\": "src/"
+    "name": "refatbd/laravel-free-fire",
+    "description": "Laravel integration for refatbd/free-fire-php.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "illuminate/cache": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/console": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/contracts": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/http": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/routing": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/support": "^11.0 || ^12.0 || ^13.0",
+        "refatbd/free-fire-php": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Refatbd\\LaravelFreeFire\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Refatbd\\LaravelFreeFire\\FreeFireServiceProvider"
+            ],
+            "aliases": {
+                "FreeFire": "Refatbd\\LaravelFreeFire\\Facades\\FreeFire"
+            }
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Refatbd\\LaravelFreeFire\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
+        "phpunit/phpunit": "^11.0 || ^12.0"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Refatbd\\LaravelFreeFire\\FreeFireServiceProvider"
-      ],
-      "aliases": {
-        "FreeFire": "Refatbd\\LaravelFreeFire\\Facades\\FreeFire"
-      }
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Refatbd\\LaravelFreeFire\\Tests\\": "tests/"
-    }
-  },
-  "require-dev": {
-    "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
-    "phpunit/phpunit": "^11.0 || ^12.0"
-  },
-  "scripts": {
-    "test": "phpunit"
-  }
 }
