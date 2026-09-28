@@ -13,7 +13,14 @@ final class LaravelCacheStore implements CacheStoreInterface
     public function __construct(private readonly Repository $cache) {}
 
     public function get(string $key): mixed { return $this->cache->get($key); }
-    public function put(string $key, mixed $value, int $ttlSeconds): void { $this->cache->put($key, $value, $ttlSeconds); }
+    public function put(string $key, mixed $value, int $ttlSeconds): void
+    {
+        try {
+            $this->cache->put($key, $value, $ttlSeconds);
+        } catch (\Throwable) {
+            // Defensive: caching failure must not disrupt caller flow.
+        }
+    }
     public function forget(string $key): void { $this->cache->forget($key); }
 
     public function acquireLock(string $key, int $ttlSeconds): ?string

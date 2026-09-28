@@ -67,7 +67,11 @@ final class FreeFireServiceProvider extends ServiceProvider
             new BundledCredentialProvider(),
         ]));
         $this->app->singleton(CacheStoreInterface::class, function ($app) {
-            $repository = $app['cache']->store(config('freefire.cache_store'));
+            $storeName = config('freefire.cache_store');
+            if (empty($storeName) && config('cache.default') === 'database') {
+                $storeName = 'file';
+            }
+            $repository = $app['cache']->store($storeName);
             return new LaravelCacheStore($repository);
         });
         $this->app->singleton(PlayerResponseDecoderInterface::class, function ($app) {
