@@ -19,7 +19,17 @@ final class MediaController
         return $this->render(function () use ($request, $uid, $client, $media) {
             $region = $request->query('region') ? (string) $request->query('region') : null;
             $size = max(128, min((int) $request->query('size', 512), 1024));
-            return $media->avatar($client->player($uid, $region), $size);
+            try {
+                $player = $client->player($uid, $region);
+            } catch (FreeFireException) {
+                $player = [
+                    'basicInfo' => [
+                        'accountId' => $uid,
+                        'nickname' => 'Player',
+                    ],
+                ];
+            }
+            return $media->avatar($player, $size);
         });
     }
 
@@ -30,7 +40,17 @@ final class MediaController
             $width = max(800, min((int) $request->query('width', 1000), 1600));
             $height = max(200, min((int) $request->query('height', 250), 400));
             $raw = $request->boolean('raw') || $request->query('raw') === '1' || $request->query('mode') === 'clean';
-            return $media->banner($client->player($uid, $region), $width, $height, $raw);
+            try {
+                $player = $client->player($uid, $region);
+            } catch (FreeFireException) {
+                $player = [
+                    'basicInfo' => [
+                        'accountId' => $uid,
+                        'nickname' => 'Player',
+                    ],
+                ];
+            }
+            return $media->banner($player, $width, $height, $raw);
         });
     }
 

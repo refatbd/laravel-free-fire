@@ -53,4 +53,11 @@ final class PackageRoutesTest extends TestCase
         self::assertTrue(app('router')->has('freefire.avatar.compat'));
         self::assertTrue(app('router')->has('freefire.banner.compat'));
     }
+
+    public function test_player_lookup_command_validates_uid(): void
+    {
+        $this->artisan('freefire:player', ['uid' => 'invalid'])
+            ->expectsOutputToContain('Please provide a valid 5-20 digit numeric UID.')
+            ->assertFailed();
+    }
 }

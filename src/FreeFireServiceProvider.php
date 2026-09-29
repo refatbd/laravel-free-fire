@@ -30,6 +30,7 @@ use Refatbd\FreeFire\Protocol\ProtocolProfileRegistry;
 use Refatbd\FreeFire\Token\TokenManager;
 use Refatbd\LaravelFreeFire\Cache\LaravelCacheStore;
 use Refatbd\LaravelFreeFire\Console\MediaCheckCommand;
+use Refatbd\LaravelFreeFire\Console\PlayerLookupCommand;
 use Refatbd\LaravelFreeFire\Console\RefreshTokensCommand;
 
 final class FreeFireServiceProvider extends ServiceProvider
@@ -140,7 +141,7 @@ final class FreeFireServiceProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
         }
         if ($this->app->runningInConsole()) {
-            $this->commands([MediaCheckCommand::class, RefreshTokensCommand::class]);
+            $this->commands([MediaCheckCommand::class, RefreshTokensCommand::class, PlayerLookupCommand::class]);
         }
     }
 }

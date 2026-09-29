@@ -7,7 +7,7 @@ return [
     // Custom profiles or overrides. Built-in profiles are registered by core
     // even when an older published Laravel config does not list them.
     'profiles' => [],
-    'cache_store' => env('FREEFIRE_CACHE_STORE'),
+    'cache_store' => env('FREEFIRE_CACHE_STORE', 'file'),
     'player_cache_ttl' => (int) env('FREEFIRE_PLAYER_CACHE_TTL', 300),
     'routes' => [
         'enabled' => env('FREEFIRE_ROUTES_ENABLED', true),
